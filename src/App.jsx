@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import draPiresPhoto from './assets/dra-pires.jpg'
 
 function App() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -254,7 +255,7 @@ function App() {
             </div>
             <div className="profile-image">
               <img 
-                src="./src/assets/dra-pires.jpg" 
+                src={draPiresPhoto} 
                 alt="Dra. Fátima Pires - Psicóloga Clínica" 
                 className="profile-photo"
               />
