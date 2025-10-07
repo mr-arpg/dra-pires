@@ -10,35 +10,178 @@ function App() {
   const [submissionStatus, setSubmissionStatus] = useState('')
   const [email, setEmail] = useState('')
   const [emailSubmitted, setEmailSubmitted] = useState(false)
+  const [language, setLanguage] = useState('pt')
 
   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQHAE_aGYZXPQOSDHUqER9r2fZU4GMwRbL8hjAkGEdkmBwlB1Kyyvii7hrDs-ctA-Iug/exec'
+
+  // Translations object
+  const translations = {
+    pt: {
+      title: 'Psicóloga',
+      credential1: '✓ Membro Efetivo da Ordem dos Psicólogos Portugueses',
+      credential2: '✓ Mais de 30 anos de experiência profissional',
+      credential3: '✓ Experiência nacional e internacional',
+      aboutTitle: 'Sobre a Dra. Pires',
+      formationTitle: 'Formação',
+      formationText: 'Licenciada em Psicologia. Formação em Neuropsicologia, Neuroeducação, Neurociências e Ciências da Educação. Membro efetivo da Ordem dos Psicólogos Portugueses.',
+      experienceTitle: 'Experiência',
+      experienceText: 'Experiência profissional em contexto nacional e internacional, trabalhando com diversos grupos etários e problemáticas psicológicas.',
+      internationalTitle: 'Práticas Internacionais',
+      internationalText: 'Possibilidade de acompanhamento em Francês, Inglês e Espanhol.',
+      servicesTitle: 'Serviços Disponíveis',
+      service1Title: 'Pacote de 4 Sessões Mensais',
+      service1Item1: 'Sessões online ou presencial',
+      service1Item2: 'Desenvolvimento de estratégias personalizadas',
+      service1Item3: 'Foco no bem-estar pessoal, social e académico',
+      servicePrice: 'Preço Variável mediante rendimento familiar (declaração de IRS)',
+      service2Title: 'Acompanhamento Especializado',
+      service2Item1: 'Resolução de estados depressivos',
+      service2Item2: 'Gestão de ansiedade e stress',
+      service2Item3: 'Melhoria da qualidade do sono',
+      service2Item4: 'Estratégias académicas',
+      contactTitle: 'Entra em contacto',
+      phoneTitle: 'Telefone',
+      phoneAvailability: 'Disponível para marcação de consultas',
+      emailTitle: 'Email',
+      emailAvailability: 'Resposta rápida garantida',
+      consultationTitle: 'Consulta',
+      consultationType: 'Online ou Presencial',
+      consultationHours: 'Horários flexíveis',
+      encouragementTitle: 'NÃO FIQUES SÓ!',
+      encouragementText: 'Estou aqui para te ajudar a superar os teus desafios e alcançar o bem-estar que mereces.',
+      footerText: '2025 Dra. Fátima Pires - Psicóloga',
+      restartButton: 'Fazer questionário novamente',
+      quizQuestion1: 'Qual é a tua idade?',
+      quizQuestion2: 'Com que tipo de desafios te identificas mais? (podes escolher várias opções)',
+      quizAge1: '18-21 anos',
+      quizAge2: '22-25 anos',
+      quizAge3: '26-30 anos',
+      quizAge4: 'Mais de 30 anos',
+      quizProblem1: 'Ansiedade e stress',
+      quizProblem2: 'Estados depressivos',
+      quizProblem3: 'Problemas de sono',
+      quizProblem4: 'Dificuldades académicas',
+      quizProblem5: 'Problemas sociais/relacionamentos',
+      quizProblem6: 'Alterações de comportamento',
+      quizProblem7: 'Autoestima e confiança',
+      quizProblem8: 'Outros desafios',
+      emailPageTitle: 'Para veres o resultado por favor introduz o teu email',
+      emailPlaceholder: 'O teu email',
+      emailInstruction: 'O teu email será usado apenas para te enviar informações relevantes sobre os serviços da Dra. Pires.',
+      emailSubmitButton: 'Ver Resultado!',
+      previousButton: 'Anterior',
+      nextButton: 'Seguinte',
+      resultButton: 'Ver Resultado',
+      helpPrefix: 'Eu posso ajudar-te a ',
+      helpAnxiety: 'gerir a ansiedade e encontrar estratégias de relaxamento, ',
+      helpDepression: 'superar estados depressivos e recuperar o bem-estar emocional, ',
+      helpSleep: 'melhorar a qualidade do sono e estabelecer rotinas saudáveis, ',
+      helpAcademic: 'desenvolver estratégias de estudo e gestão do tempo académico, ',
+      helpSocial: 'melhorar os relacionamentos sociais e construir conexões mais saudáveis, ',
+      helpBehavior: 'modificar padrões de comportamento e desenvolver hábitos mais positivos, ',
+      helpSelfEsteem: 'aumentar a autoestima e confiança pessoal, ',
+      helpSuffix: 'através de um acompanhamento psicológico personalizado e especializado.'
+    },
+    en: {
+      title: 'Psychologist',
+      credential1: '✓ Full Member of the Portuguese Psychologists Association',
+      credential2: '✓ Over 30 years of professional experience',
+      credential3: '✓ National and international experience',
+      aboutTitle: 'About Dr. Pires',
+      formationTitle: 'Education',
+      formationText: 'Degree in Psychology. Training in Neuropsychology, Neuroeducation, Neurosciences, and Education Sciences. Full member of the Portuguese Psychologists Association.',
+      experienceTitle: 'Experience',
+      experienceText: 'Professional experience in national and international contexts, working with diverse age groups and psychological issues.',
+      internationalTitle: 'International Practice',
+      internationalText: 'Sessions available in French, English, and Spanish.',
+      servicesTitle: 'Available Services',
+      service1Title: 'Package of 4 Monthly Sessions',
+      service1Item1: 'Online or in-person sessions',
+      service1Item2: 'Development of personalized strategies',
+      service1Item3: 'Focus on personal, social, and academic well-being',
+      servicePrice: 'Variable price based on family income (tax return declaration)',
+      service2Title: 'Specialized Support',
+      service2Item1: 'Resolution of depressive states',
+      service2Item2: 'Anxiety and stress management',
+      service2Item3: 'Sleep quality improvement',
+      service2Item4: 'Academic strategies',
+      contactTitle: 'Get in touch',
+      phoneTitle: 'Phone',
+      phoneAvailability: 'Available for appointment scheduling',
+      emailTitle: 'Email',
+      emailAvailability: 'Quick response guaranteed',
+      consultationTitle: 'Consultation',
+      consultationType: 'Online or In-Person',
+      consultationHours: 'Flexible hours',
+      encouragementTitle: 'DON\'T BE ALONE!',
+      encouragementText: 'I am here to help you overcome your challenges and achieve the well-being you deserve.',
+      footerText: '2025 Dr. Fátima Pires - Psychologist',
+      restartButton: 'Take quiz again',
+      quizQuestion1: 'What is your age?',
+      quizQuestion2: 'What type of challenges do you identify with most? (you can choose multiple options)',
+      quizAge1: '18-21 years old',
+      quizAge2: '22-25 years old',
+      quizAge3: '26-30 years old',
+      quizAge4: 'Over 30 years old',
+      quizProblem1: 'Anxiety and stress',
+      quizProblem2: 'Depressive states',
+      quizProblem3: 'Sleep problems',
+      quizProblem4: 'Academic difficulties',
+      quizProblem5: 'Social/relationship problems',
+      quizProblem6: 'Behavioral changes',
+      quizProblem7: 'Self-esteem and confidence',
+      quizProblem8: 'Other challenges',
+      emailPageTitle: 'To see the result, please enter your email',
+      emailPlaceholder: 'Your email',
+      emailInstruction: 'Your email will only be used to send you relevant information about Dr. Pires\' services.',
+      emailSubmitButton: 'See Result!',
+      previousButton: 'Previous',
+      nextButton: 'Next',
+      resultButton: 'See Result',
+      helpPrefix: 'I can help you ',
+      helpAnxiety: 'manage anxiety and find relaxation strategies, ',
+      helpDepression: 'overcome depressive states and recover emotional well-being, ',
+      helpSleep: 'improve sleep quality and establish healthy routines, ',
+      helpAcademic: 'develop study strategies and academic time management, ',
+      helpSocial: 'improve social relationships and build healthier connections, ',
+      helpBehavior: 'modify behavior patterns and develop more positive habits, ',
+      helpSelfEsteem: 'increase self-esteem and personal confidence, ',
+      helpSuffix: 'through personalized and specialized psychological support.'
+    }
+  }
+
+  const t = (key) => translations[language][key]
 
   const questions = [
     {
       id: 'age',
-      question: 'Qual é a tua idade?',
+      get question() { return t('quizQuestion1') },
       type: 'select',
-      options: [
-        { value: '18-21', label: '18-21 anos' },
-        { value: '22-25', label: '22-25 anos' },
-        { value: '26-30', label: '26-30 anos' },
-        { value: '30+', label: 'Mais de 30 anos' }
-      ]
+      get options() {
+        return [
+          { value: '18-21', label: t('quizAge1') },
+          { value: '22-25', label: t('quizAge2') },
+          { value: '26-30', label: t('quizAge3') },
+          { value: '30+', label: t('quizAge4') }
+        ]
+      }
     },
     {
       id: 'problems',
-      question: 'Com que tipo de desafios te identificas mais? (podes escolher várias opções)',
+      get question() { return t('quizQuestion2') },
       type: 'multiple',
-      options: [
-        { value: 'anxiety', label: 'Ansiedade e stress' },
-        { value: 'depression', label: 'Estados depressivos' },
-        { value: 'sleep', label: 'Problemas de sono' },
-        { value: 'academic', label: 'Dificuldades académicas' },
-        { value: 'social', label: 'Problemas sociais/relacionamentos' },
-        { value: 'behavior', label: 'Alterações de comportamento' },
-        { value: 'self-esteem', label: 'Autoestima e confiança' },
-        { value: 'other', label: 'Outros desafios' }
-      ]
+      get options() {
+        return [
+          { value: 'anxiety', label: t('quizProblem1') },
+          { value: 'depression', label: t('quizProblem2') },
+          { value: 'sleep', label: t('quizProblem3') },
+          { value: 'academic', label: t('quizProblem4') },
+          { value: 'social', label: t('quizProblem5') },
+          { value: 'behavior', label: t('quizProblem6') },
+          { value: 'self-esteem', label: t('quizProblem7') },
+          { value: 'other', label: t('quizProblem8') }
+        ]
+      }
     }
   ]
 
@@ -194,34 +337,34 @@ function App() {
     const age = answers.age
     const problems = answers.problems || []
     
-    let message = "Eu posso ajudar-te a "
+    let message = t('helpPrefix')
     
     if (problems.includes('anxiety')) {
-      message += "gerir a ansiedade e encontrar estratégias de relaxamento, "
+      message += t('helpAnxiety')
     }
     if (problems.includes('depression')) {
-      message += "superar estados depressivos e recuperar o bem-estar emocional, "
+      message += t('helpDepression')
     }
     if (problems.includes('sleep')) {
-      message += "melhorar a qualidade do sono e estabelecer rotinas saudáveis, "
+      message += t('helpSleep')
     }
     if (problems.includes('academic')) {
-      message += "desenvolver estratégias de estudo e gestão do tempo académico, "
+      message += t('helpAcademic')
     }
     if (problems.includes('social')) {
-      message += "melhorar os relacionamentos sociais e construir conexões mais saudáveis, "
+      message += t('helpSocial')
     }
     if (problems.includes('behavior')) {
-      message += "modificar padrões de comportamento e desenvolver hábitos mais positivos, "
+      message += t('helpBehavior')
     }
     if (problems.includes('self-esteem')) {
-      message += "aumentar a autoestima e confiança pessoal, "
+      message += t('helpSelfEsteem')
     }
     
     // Remove última vírgula
     message = message.replace(/,\s*$/, '')
     
-    message += " através de um acompanhamento psicológico personalizado e especializado."
+    message += ' ' + t('helpSuffix')
     
     return message
   }
@@ -243,14 +386,21 @@ function App() {
       <div className="portfolio-container">
         {/* Header Profissional */}
         <header className="portfolio-header">
+          <button 
+            className="language-toggle"
+            onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+            aria-label="Toggle language"
+          >
+            {language === 'pt' ? 'EN' : 'PT'}
+          </button>
           <div className="header-content">
             <div className="psychologist-intro">
               <h1>Dra. Fátima Pires</h1>
-              <h2>Psicóloga Clínica & Neuropsicóloga</h2>
+              <h2>{t('title')}</h2>
               <div className="credentials">
-                <span className="credential">✓ Membro Efetivo da Ordem dos Psicólogos Portugueses</span>
-                <span className="credential">✓ Mais de 30 anos de experiência profissional</span>
-                <span className="credential">✓ Experiência nacional e internacional</span>
+                <span className="credential">{t('credential1')}</span>
+                <span className="credential">{t('credential2')}</span>
+                <span className="credential">{t('credential3')}</span>
               </div>
             </div>
             <div className="profile-image">
@@ -278,22 +428,22 @@ function App() {
         {/* Sobre */}
         <section className="about-section">
           <div className="container">
-            <h3>Sobre a Dra. Pires</h3>
+            <h3>{t('aboutTitle')}</h3>
             <div className="about-grid">
               <div className="about-card">
                 <div className="card-icon">🎓</div>
-                <h4>Formação</h4>
-                <p>Licenciada em Psicologia com especialização em Neuropsicologia. Membro efetivo da Ordem dos Psicólogos Portugueses com mais de 30 anos de experiência clínica.</p>
+                <h4>{t('formationTitle')}</h4>
+                <p>{t('formationText')}</p>
               </div>
               <div className="about-card">
                 <div className="card-icon">🌍</div>
-                <h4>Experiência</h4>
-                <p>Experiência profissional em contexto nacional e internacional, trabalhando com diversos grupos etários e problemáticas psicológicas.</p>
+                <h4>{t('experienceTitle')}</h4>
+                <p>{t('experienceText')}</p>
               </div>
               <div className="about-card">
-                <div className="card-icon">🎯</div>
-                <h4>Especialização</h4>
-                <p>Especializada em ansiedade, depressão, problemas de sono, dificuldades académicas e bem-estar psicológico de estudantes universitários.</p>
+                <div className="card-icon">🌍</div>
+                <h4>{t('internationalTitle')}</h4>
+                <p>{t('internationalText')}</p>
               </div>
             </div>
           </div>
@@ -302,24 +452,24 @@ function App() {
         {/* Serviços */}
         <section className="services-section">
           <div className="container">
-            <h3>Serviços Disponíveis</h3>
+            <h3>{t('servicesTitle')}</h3>
             <div className="services-grid">
               <div className="service-card">
-                <h4>Pacote de 4 Sessões Mensais</h4>
+                <h4>{t('service1Title')}</h4>
                 <ul>
-                  <li>Sessões online ou presencial</li>
-                  <li>Desenvolvimento de estratégias personalizadas</li>
-                  <li>Foco no bem-estar pessoal, social e académico</li>
+                  <li>{t('service1Item1')}</li>
+                  <li>{t('service1Item2')}</li>
+                  <li>{t('service1Item3')}</li>
                 </ul>
-                <div className="service-price">Preço Variável mediante rendimento familiar (declaração de IRS)</div>
+                <div className="service-price">{t('servicePrice')}</div>
               </div>
               <div className="service-card">
-                <h4>Acompanhamento Especializado</h4>
+                <h4>{t('service2Title')}</h4>
                 <ul>
-                  <li>Resolução de estados depressivos</li>
-                  <li>Gestão de ansiedade e stress</li>
-                  <li>Melhoria da qualidade do sono</li>
-                  <li>Estratégias académicas</li>
+                  <li>{t('service2Item1')}</li>
+                  <li>{t('service2Item2')}</li>
+                  <li>{t('service2Item3')}</li>
+                  <li>{t('service2Item4')}</li>
                 </ul>
               </div>
             </div>
@@ -329,30 +479,30 @@ function App() {
         {/* Contacto */}
         <section className="contact-section">
           <div className="container">
-            <h3>Entra em contacto</h3>
+            <h3>{t('contactTitle')}</h3>
             <div className="contact-grid">
               <div className="contact-card">
                 <div className="contact-icon">📞</div>
-                <h4>Telefone</h4>
+                <h4>{t('phoneTitle')}</h4>
                 <a href="https://wa.me/351938721803" target="_blank" rel="noopener noreferrer">938 721 803</a>
-                <p>Disponível para marcação de consultas</p>
+                <p>{t('phoneAvailability')}</p>
               </div>
               <div className="contact-card">
                 <div className="contact-icon">✉️</div>
-                <h4>Email</h4>
+                <h4>{t('emailTitle')}</h4>
                 <a href="mailto:piresfatima@live.com.pt">piresfatima@live.com.pt</a>
-                <p>Resposta rápida garantida</p>
+                <p>{t('emailAvailability')}</p>
               </div>
               <div className="contact-card">
                 <div className="contact-icon">💬</div>
-                <h4>Consulta</h4>
-                <p>Online ou Presencial</p>
-                <p>Horários flexíveis</p>
+                <h4>{t('consultationTitle')}</h4>
+                <p>{t('consultationType')}</p>
+                <p>{t('consultationHours')}</p>
               </div>
             </div>
             <div className="encouragement-message">
-              <h4>NÃO FIQUES SÓ!</h4>
-              <p>Estou aqui para te ajudar a superar os teus desafios e alcançar o bem-estar que mereces.</p>
+              <h4>{t('encouragementTitle')}</h4>
+              <p>{t('encouragementText')}</p>
             </div>
           </div>
         </section>
@@ -360,9 +510,9 @@ function App() {
         {/* Footer */}
         <footer className="portfolio-footer">
           <div className="container">
-            <p>&copy; 2025 Dra. Fátima Pires - Psicóloga Clínica & Neuropsicóloga</p>
+            <p>&copy; {t('footerText')}</p>
             <button className="restart-button" onClick={resetQuiz}>
-              Fazer questionário novamente
+              {t('restartButton')}
             </button>
           </div>
         </footer>
@@ -377,19 +527,19 @@ function App() {
       <div className="app">
         <div className="quiz-container email-page">
           <div className="quiz-card">
-            <h2>Para veres o resultado por favor introduz o teu email</h2>
+            <h2>{t('emailPageTitle')}</h2>
             
             <div className="email-form-container">
               <input
                 type="email"
-                placeholder="O teu email"
+                placeholder={t('emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="email-input"
                 required
               />
               <p className="email-instruction">
-                O teu email será usado apenas para te enviar informações relevantes sobre os serviços da Dra. Pires.
+                {t('emailInstruction')}
               </p>
               <button 
                 onClick={() => {
@@ -398,7 +548,7 @@ function App() {
                 }}
                 className="email-submit-button"
               >
-                Ver Resultado!
+                {t('emailSubmitButton')}
               </button>
             </div>
           </div>
@@ -454,7 +604,7 @@ function App() {
           <div className="navigation-buttons">
             {currentStep > 0 && (
               <button className="nav-button prev-button" onClick={handlePrevious}>
-                Anterior
+                {t('previousButton')}
               </button>
             )}
             <button 
@@ -468,7 +618,7 @@ function App() {
                 (currentQuestion.type === 'multiple' && answers[currentQuestion.id].length === 0)
               }
             >
-              {currentStep === questions.length - 1 ? 'Ver Resultado' : 'Seguinte'}
+              {currentStep === questions.length - 1 ? t('resultButton') : t('nextButton')}
             </button>
           </div>
         </div>
